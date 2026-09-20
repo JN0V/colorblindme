@@ -24,9 +24,14 @@ jobs:
       - name: Page keys and selectors resolve
         run: python3 scripts/check_ui.py
 
+  # Skipped while the repository is private: Pages needs a paid plan there, and
+  # a job that fails on every push trains people to ignore the red cross. This
+  # starts working by itself the day the repository is made public.
   deploy:
     needs: check
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.event.repository.visibility == 'public'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
