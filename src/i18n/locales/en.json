@@ -127,7 +127,8 @@
     "unsupported": "This browser does not offer the camera to web pages. Browsers built on Android's system WebView — LineageOS's Jelly among them — cannot grant camera access at all, and refuse without ever asking. Chrome or Firefox will work.",
     "timeout": "The camera never answered — no prompt, no refusal. That is the signature of a WebView-based browser denying the request silently. Try Chrome or Firefox.",
     "unknown": "The camera could not be started.",
-    "noframe": "The camera was granted but sent no picture. On some devices the stream needs the page to stay in the foreground — switch back to this tab and try again. If it keeps happening, a photo works just as well."
+    "noframe": "The camera was granted but sent no picture. On some devices the stream needs the page to stay in the foreground — switch back to this tab and try again. If it keeps happening, a photo works just as well.",
+    "details": "Technical details (tap to open, then copy)"
   },
   "limits": {
     "title": "What this measurement does not tell you",

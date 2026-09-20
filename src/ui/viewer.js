@@ -140,19 +140,43 @@ async function cameraDiagnosis() {
   return null;
 }
 
-/** Resolve once the element actually has pixel dimensions, polling rather
-    than trusting a single event that may never fire. */
+/** Resolve once the element actually has pixel dimensions. Polls on a timer
+    rather than requestAnimationFrame, which browsers throttle or stop while a
+    permission prompt is up or the page is not visible — the poll would then
+    never tick, and a working camera would time out. */
 function frames(ms) {
   return new Promise((res, rej) => {
-    const t0 = performance.now();
+    const t0 = Date.now();
     (function tick() {
       if (cam.videoWidth) return res();
-      if (performance.now() - t0 > ms) {
-        return rej(Object.assign(new Error("no frame"), { name: "NoFrame" }));
-      }
-      requestAnimationFrame(tick);
+      if (Date.now() - t0 > ms) return rej(Object.assign(new Error("no frame"), { name: "NoFrame" }));
+      setTimeout(tick, 120);
     })();
   });
+}
+
+/** Ask for the rear camera, then for any camera. An ideal constraint is not
+    supposed to fail, but on older hardware the negotiated mode can still come
+    back unusable, and a plain request often succeeds where a shaped one does not. */
+async function requestStream(diag) {
+  const attempts = [{ video: { facingMode: { ideal: "environment" } } }, { video: true }];
+  let last;
+  for (const [i, constraints] of attempts.entries()) {
+    try {
+      const got = await Promise.race([
+        navigator.mediaDevices.getUserMedia(constraints),
+        new Promise((_, rej) =>
+          setTimeout(rej, 12000, Object.assign(new Error("no answer"), { name: "Timeout" }))),
+      ]);
+      diag.attempt = i + 1;
+      return got;
+    } catch (e) {
+      last = e;
+      diag["attempt" + (i + 1)] = e.name;
+      if (e.name === "NotAllowedError" || e.name === "Timeout") throw e;
+    }
+  }
+  throw last;
 }
 
 async function startCam() {
@@ -161,41 +185,45 @@ async function startCam() {
   const blocked = await cameraDiagnosis();
   if (blocked) return setNote([blocked, "camera.fallback"], "warn");
 
+  const diag = { secure: String(window.isSecureContext), ua: navigator.userAgent.slice(0, 80) };
   try {
     stopCam();
     setNote("camera.asking", "info");
-    /* A WebView that denies silently leaves this pending forever, so the
-       request itself gets a deadline, not only the metadata wait. */
-    stream = await Promise.race([
-      navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { ideal: "environment" }, width: { ideal: 1080 } }, audio: false }),
-      new Promise((_, rej) => setTimeout(rej, 12000, Object.assign(new Error("no answer"), { name: "Timeout" }))),
-    ]);
+    try {
+      const devs = await navigator.mediaDevices.enumerateDevices();
+      diag.videoinputs = devs.filter(d => d.kind === "videoinput").length;
+    } catch (e) { diag.videoinputs = "enumerate:" + e.name; }
+
+    stream = await requestStream(diag);
+    const track = stream.getVideoTracks()[0];
+    diag.track = track
+      ? track.readyState + "/" + (track.enabled ? "on" : "off") + "/" + (track.muted ? "muted" : "live")
+      : "none";
+    const set = (track && track.getSettings) ? track.getSettings() : {};
+    diag.settings = (set.width || "?") + "x" + (set.height || "?") + " " + (set.facingMode || "?");
+
     cam.srcObject = stream;
-    /* play() BEFORE waiting on dimensions. Several engines withhold
-       loadedmetadata for a MediaStream until playback starts, so waiting
-       first is waiting on an event our own inaction prevents — which is
-       exactly how this hung after the permission had been granted. */
-    try { await cam.play(); } catch { /* autoplay edge cases; frames may still arrive */ }
+    /* play() BEFORE waiting on dimensions: several engines withhold
+       loadedmetadata for a MediaStream until playback starts. */
+    try { await cam.play(); diag.play = "ok"; } catch (e) { diag.play = e.name; }
     await frames(8000);
+
     state.source = "camera"; live = true; photo = null;
     fit(); setNote(null);
     loop();
   } catch (err) {
     stopCam();
+    diag.error = err.name;
+    diag.video = cam.videoWidth + "x" + cam.videoHeight + " readyState=" + cam.readyState;
     const known = {
-      NotAllowedError: "camera.denied",
-      NotFoundError: "camera.notfound",
-      NotReadableError: "camera.busy",
-      OverconstrainedError: "camera.notfound",
-      SecurityError: "camera.insecure",
-      Timeout: "camera.timeout",
-      NoFrame: "camera.noframe",
+      NotAllowedError: "camera.denied", NotFoundError: "camera.notfound",
+      NotReadableError: "camera.busy", OverconstrainedError: "camera.notfound",
+      SecurityError: "camera.insecure", Timeout: "camera.timeout", NoFrame: "camera.noframe",
     }[err.name];
-    setNote([known || "camera.unknown", "camera.fallback"], "warn");
-    if (!known) $("#note").textContent += ` (${err.name})`;
+    setNote([known || "camera.unknown", "camera.fallback"], "warn", diag);
   }
 }
+
 function loop(t) {
   if (!live) return;
   requestAnimationFrame(loop);
@@ -222,16 +250,31 @@ function fit() {
   render();
 }
 
-function setNote(keys, kind) {
-  state.note = keys ? { keys: [].concat(keys), kind } : null;
+function setNote(keys, kind, diag) {
+  state.note = keys ? { keys: [].concat(keys), kind, diag } : null;
   paintNote();
 }
 function paintNote() {
   const el = $("#note");
   el.hidden = !state.note;
   if (!state.note) { el.textContent = ""; return; }
-  el.textContent = state.note.keys.map(k => i18n.t(k)).join(" ");
   el.className = "note" + (state.note.kind === "warn" ? "" : " info");
+  el.textContent = state.note.keys.map(k => i18n.t(k)).join(" ");
+  /* When a failure is not self-explanatory, the page reports what it saw.
+     Guessing across a conversation costs a round trip per hypothesis; this
+     costs one. */
+  if (state.note.diag) {
+    const d = document.createElement("details");
+    d.style.marginTop = "10px";
+    const sum = document.createElement("summary");
+    sum.textContent = i18n.t("camera.details");
+    sum.style.cursor = "pointer";
+    const pre = document.createElement("pre");
+    pre.style.cssText = "margin:8px 0 0;font-size:11px;white-space:pre-wrap;user-select:all;border:0;padding:0;background:none";
+    pre.textContent = Object.entries(state.note.diag).map(([k, v]) => k + ": " + v).join("\n");
+    d.append(sum, pre);
+    el.append(d);
+  }
 }
 
 /* ---------- profile ---------- */
