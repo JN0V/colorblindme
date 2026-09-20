@@ -1,0 +1,99 @@
+cff-version: 1.2.0
+title: Colorblind Me
+message: >-
+  If you use this software or its method, please cite it, and please also cite
+  the work it reimplements — the simulation model and the prior art on
+  personalised simulation listed under references.
+type: software
+authors:
+  - name: The Colorblind Me contributors
+abstract: >-
+  Measures where an individual's colour discrimination actually breaks down,
+  fits the Machado (2009) severity parameter to that measurement, and encodes
+  the result as a short code carried in a URL fragment, so a colour-blind
+  person can show someone else what they actually see rather than the
+  worst-case dichromacy every off-the-shelf simulator displays.
+keywords:
+  - colour vision deficiency
+  - colour blindness
+  - accessibility
+  - psychophysics
+  - simulation
+license: Apache-2.0
+references:
+  - type: article
+    title: >-
+      A Physiologically-based Model for Simulation of Color Vision Deficiency
+    authors:
+      - family-names: Machado
+        given-names: Gustavo M.
+      - family-names: Oliveira
+        given-names: Manuel M.
+      - family-names: Fernandes
+        given-names: Leandro A. F.
+    journal: IEEE Transactions on Visualization and Computer Graphics
+    volume: 15
+    issue: 6
+    start: 1291
+    end: 1298
+    year: 2009
+    doi: 10.1109/TVCG.2009.113
+    notes: >-
+      Source of the severity-parameterised matrices. Note the published typo in
+      equations 17 and 18, page 1295; this project uses the pre-computed
+      matrices and so is unaffected.
+  - type: conference-paper
+    title: >-
+      Individual models of color differentiation to improve interpretability of
+      information visualization
+    authors:
+      - family-names: Flatla
+        given-names: David R.
+      - family-names: Gutwin
+        given-names: Carl
+    collection-title: >-
+      Proceedings of the SIGCHI Conference on Human Factors in Computing Systems
+    year: 2010
+    doi: 10.1145/1753326.1753715
+  - type: conference-paper
+    title: >-
+      "So that's what you see": building understanding with personalized
+      simulations of colour vision deficiency
+    authors:
+      - family-names: Flatla
+        given-names: David R.
+      - family-names: Gutwin
+        given-names: Carl
+    collection-title: >-
+      Proceedings of the 14th International ACM SIGACCESS Conference on
+      Computers and Accessibility
+    year: 2012
+    notes: >-
+      The idea this project applies. DOI not yet confirmed against the ACM
+      record; see docs/prior-art.md.
+  - type: conference-paper
+    title: Real-Time Mobile Personalized Simulations of Impaired Colour Vision
+    authors:
+      - family-names: McAlpine
+        given-names: R.
+      - family-names: Flatla
+        given-names: David R.
+    collection-title: >-
+      Proceedings of the 18th International ACM SIGACCESS Conference on
+      Computers and Accessibility
+    start: 181
+    end: 189
+    year: 2016
+    doi: 10.1145/2982142.2982170
+    notes: >-
+      Author surname appears as both McAlpine and MacAlpine across sources, and
+      author order varies; confirm against the ACM record before quoting.
+  - type: software
+    title: Colour
+    authors:
+      - name: Colour Developers
+    repository-code: https://github.com/colour-science/colour
+    license: BSD-3-Clause
+    notes: >-
+      Source of the pre-computed CVD_MATRICES_MACHADO2010 dataset embedded in
+      src/core/machado.js. See NOTICE.

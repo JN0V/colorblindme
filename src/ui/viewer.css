@@ -1,0 +1,94 @@
+/* Viewer — path 2. Mobile first: the demo that matters happens on a phone,
+   held by someone who was handed a link. */
+:root{
+  --ground:#F3F4F6; --panel:#FFFFFF; --panel-2:#EDEFF3;
+  --line:#DCE0E6; --line-soft:#E7EAEF;
+  --ink:#141A20; --ink-2:#3D4650; --muted:#5A6470;
+  --blue:#2B6CAD; --blue-soft:#E4EDF6; --amber:#8F6114; --amber-soft:#F8EFDC;
+  --sans:"Public Sans",ui-sans-serif,system-ui,sans-serif;
+  --disp:"Bricolage Grotesque","Public Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0F1318; --panel:#171C23; --panel-2:#1E242C;
+  --line:#2A313B; --line-soft:#222831;
+  --ink:#E7EBF0; --ink-2:#B6BFC9; --muted:#8B94A0;
+  --blue:#6BAAE0; --blue-soft:#1B2836; --amber:#D6A84A; --amber-soft:#2A2213;
+}}
+:root[data-theme="dark"]{
+  --ground:#0F1318; --panel:#171C23; --panel-2:#1E242C;
+  --line:#2A313B; --line-soft:#222831;
+  --ink:#E7EBF0; --ink-2:#B6BFC9; --muted:#8B94A0;
+  --blue:#6BAAE0; --blue-soft:#1B2836; --amber:#D6A84A; --amber-soft:#2A2213;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+img{max-width:100%}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--panel);border-bottom:1px solid var(--line)}
+.bar-in{max-width:980px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
+.brand{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:-.01em;margin-right:auto}
+.who{font-size:13px;color:var(--muted)}
+.who b{color:var(--ink)}
+.who code{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.iconbtn{width:40px;height:40px;min-height:40px;display:grid;place-items:center;border:1px solid var(--line);background:var(--panel);border-radius:10px;cursor:pointer;color:var(--ink)}
+.iconbtn:hover{background:var(--panel-2)}
+
+main{max-width:980px;margin:0 auto;padding-inline:18px;padding-block:0 64px}
+
+/* --- the wipe: one image, one divider, the whole argument --- */
+.stagewrap{margin-top:18px}
+.stage{position:relative;border-radius:14px;overflow:hidden;background:var(--panel-2);touch-action:none;cursor:ew-resize;user-select:none}
+.stage canvas{display:block;width:100%;height:auto}
+.stage .top{position:absolute;inset:0}
+.divider{position:absolute;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 0 1px rgba(20,26,32,.3);pointer-events:none}
+.grip{position:absolute;top:50%;width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:0 2px 12px rgba(20,26,32,.34);display:grid;place-items:center;transform:translate(-50%,-50%);pointer-events:none;color:#3D4650}
+.tag{position:absolute;top:12px;padding:6px 11px;border-radius:16px;background:rgba(20,26,32,.72);color:#fff;font-size:12px;font-weight:600;white-space:nowrap;pointer-events:none}
+.tag.l{left:12px} .tag.r{right:12px}
+.hint{font-size:13.5px;color:var(--ink-2);margin:12px 0 0;max-width:62ch}
+
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{font-family:var(--sans);font-size:14.5px;font-weight:600;min-height:48px;padding:0 18px;border-radius:11px;border:1px solid var(--blue);background:var(--blue);color:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;flex-grow:1}
+.btn.ghost{background:var(--panel);color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:var(--panel-2)}
+.btn:focus-visible,.iconbtn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.filepick{position:relative;overflow:hidden}
+.filepick input{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+.note{border-left:2px solid var(--amber);background:var(--amber-soft);padding:13px 16px;border-radius:0 9px 9px 0;font-size:13.5px;color:var(--ink-2);margin-top:16px}
+.note b{color:var(--ink)}
+.note.info{border-color:var(--blue);background:var(--blue-soft)}
+
+/* --- settings, deliberately behind a button --- */
+.sheet{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:18px;margin-top:16px;display:grid;gap:16px}
+.sheet h2{font-family:var(--disp);font-size:17px;font-weight:600;margin:0}
+.field{display:grid;gap:7px}
+.field .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--ink-2)}
+.field .val{font-family:var(--mono);font-size:13px;color:var(--ink)}
+.field .val em{font-style:normal;color:var(--blue)}
+input[type=range]{width:100%;accent-color:var(--blue)}
+.small{font-size:12.5px;color:var(--muted);margin:0}
+.codein{display:flex;gap:9px;flex-wrap:wrap}
+.codein input{flex-grow:1;min-width:150px;font-family:var(--mono);font-size:17px;letter-spacing:.06em;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2);color:var(--ink)}
+.presets{display:grid;gap:8px}
+.preset{display:flex;align-items:center;gap:11px;text-align:left;padding:12px 14px;border:1px solid var(--line);background:var(--panel-2);border-radius:10px;cursor:pointer;font-family:inherit;color:var(--ink);min-height:48px}
+.preset:hover{border-color:var(--blue)}
+.preset code{font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.preset span{font-size:14px;font-weight:600}
+
+/* --- triptych, for the argument rather than the demo --- */
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.tri figure{margin:0;display:grid;gap:8px}
+.tri canvas{width:100%;height:auto;border:1px solid var(--line);border-radius:10px;display:block}
+.tri .hero canvas{border-color:var(--blue);border-width:2px}
+.tri figcaption{font-size:12.5px;color:var(--muted);line-height:1.4}
+.tri figcaption b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-bottom:3px}
+.tri .hero figcaption b{color:var(--blue)}
+@media (max-width:640px){.tri{grid-template-columns:1fr}}
+
+footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;display:grid;gap:8px}
+footer a{color:var(--blue)}
+.langs{display:flex;gap:10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}

@@ -1,0 +1,43 @@
+Colorblind Me
+Copyright 2026 the Colorblind Me contributors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+--------------------------------------------------------------------------
+Third-party material
+--------------------------------------------------------------------------
+
+src/core/machado.js embeds the pre-computed colour-vision-deficiency matrices
+published as CVD_MATRICES_MACHADO2010 in colour-science:
+
+    colour-science / colour
+    Copyright (c) 2013-2026 Colour Developers
+    BSD-3-Clause — https://opensource.org/licenses/BSD-3-Clause
+    https://github.com/colour-science/colour
+
+The underlying model is described in:
+
+    Machado, G. M., Oliveira, M. M. & Fernandes, L. A. F. (2009).
+    A Physiologically-based Model for Simulation of Color Vision Deficiency.
+    IEEE Transactions on Visualization and Computer Graphics, 15(6), 1291-1298.
+
+--------------------------------------------------------------------------
+Prior art this project builds on
+--------------------------------------------------------------------------
+
+The idea of calibrating a simulation to one individual, rather than applying a
+generic model, is not ours. It is set out in:
+
+    Flatla, D. R. & Gutwin, C. (2012). "So that's what you see": building
+    understanding with personalized simulations of colour vision deficiency.
+    ASSETS '12.
+
+    Flatla, D. R. & Gutwin, C. (2010). Individual models of color
+    differentiation to improve interpretability of information visualization.
+    CHI '10.
+
+    McAlpine, R. & Flatla, D. R. (2016). Real-Time Mobile Personalized
+    Simulations of Impaired Colour Vision. ASSETS '16, 181-189.
+
+No code from those works is used here; the methods are reimplemented from
+their published descriptions.

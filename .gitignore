@@ -1,0 +1,10 @@
+# Nothing here is built — the site is served as-is. This file exists to keep
+# editor and OS droppings out, not to hide artefacts.
+.DS_Store
+Thumbs.db
+*~
+*.swp
+.idea/
+.vscode/
+node_modules/
+*.log

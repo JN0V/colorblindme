@@ -1,0 +1,133 @@
+{
+  "_meta": {
+    "locale": "fr",
+    "status": "reviewed",
+    "note": "Traduit de l'anglais. Le vocabulaire clinique suit la nomenclature usuelle (deutéranomalie, protanomalie, tritanomalie).",
+    "source": false
+  },
+  "app": {
+    "name": "Colorblind Me",
+    "tagline": "Voir avec les yeux de quelqu'un d'autre",
+    "intro": "Les simulateurs de daltonisme montrent tous le cas le plus sévère. Trois personnes sur quatre voient bien mieux que ça. Mesurez la vraie mesure, puis montrez-la.",
+    "privacy": "Tout se calcule dans le navigateur. Aucune mesure n'est envoyée nulle part, et le code de vision tient dans l'adresse du lien.",
+    "language": "Langue"
+  },
+  "door": {
+    "measure": {
+      "kicker": "Parcours 1",
+      "title": "Je suis daltonien",
+      "desc": "Trois minutes de mesure, et vous repartez avec un code qui décrit votre vision."
+    },
+    "view": {
+      "kicker": "Parcours 2",
+      "title": "Je veux voir ce que voit un proche",
+      "desc": "Entrez le code qu'on vous a transmis. La caméra montre le monde tel qu'il le voit."
+    },
+    "cta": "Continuer"
+  },
+  "axis": {
+    "prot": "Protanomalie",
+    "deut": "Deutéranomalie",
+    "trit": "Tritanomalie",
+    "prot_short": "protan",
+    "deut_short": "deutan",
+    "trit_short": "tritan",
+    "prot_cone": "cône L (rouge)",
+    "deut_cone": "cône M (vert)",
+    "trit_cone": "cône S (bleu)"
+  },
+  "setup": {
+    "title": "Une seule condition",
+    "filters": "Coupez tout filtre de couleur. Mode nuit, luminosité adaptative, f.lux, correction des couleurs d'accessibilité, profil d'écran « vif ». Ces filtres s'appliquent après la page et fausseraient la mesure.",
+    "brightness": "Luminosité entre la moitié et les trois quarts, à un bras de distance.",
+    "ambient": "Lumière ambiante stable, sans reflet sur la dalle.",
+    "botheyes": "Les deux yeux ouverts, comme en usage normal.",
+    "honesty": "Quand vous ne voyez rien, dites-le. C'est la réponse la plus utile du test.",
+    "gamma": "Vérifier le gamma de l'écran",
+    "gamma_hint": "Reculez et plissez les yeux : les deux moitiés doivent tendre vers la même clarté.",
+    "start": "Commencer",
+    "duration": "Environ {count} essais, trois minutes."
+  },
+  "trial": {
+    "prompt": "Touchez le carré différent",
+    "inner": "Vers le centre : j'hésite",
+    "outer": "Vers l'extérieur : c'est évident",
+    "dunno": "Je ne sais pas",
+    "quit": "Quitter",
+    "counter": {
+      "one": "{count} essai",
+      "other": "{count} essais"
+    }
+  },
+  "result": {
+    "eyebrow": "Mesure terminée",
+    "title": "Votre vision, en deux nombres",
+    "primary": "Déficience principale",
+    "secondary": "Secondaire",
+    "anomalous": "Trichromatie anormale",
+    "dichromatic": "Dichromatie complète",
+    "gap": "Votre sévérité est {factor} fois plus faible que le réglage des simulateurs courants. C'est exactement l'écart qui fait dire à vos proches « mon pauvre ».",
+    "code": "Votre code de vision",
+    "code_hint": "Le code tient dans l'adresse du lien : vos proches ouvrent, ils voient. Rien à installer, rien à créer.",
+    "copy": "Copier le code",
+    "show": "Montrer ce que je vois",
+    "again": "Refaire",
+    "detail": "Le détail"
+  },
+  "load": {
+    "title": "Le code d'un proche",
+    "intro": "Si on vous a envoyé un lien, il est déjà chargé : vous n'avez rien à saisir. Sinon, tapez le code ici.",
+    "label": "Code de vision",
+    "go": "Voir avec ces yeux",
+    "or": "ou, à défaut",
+    "preset_deut_mid": "Deutéranomalie moyenne",
+    "preset_prot_mid": "Protanomalie moyenne",
+    "preset_deut_full": "Deutéranopie",
+    "preset_deut_mid_desc": "Le cas le plus fréquent",
+    "preset_prot_mid_desc": "Rouges assombris",
+    "preset_deut_full_desc": "Dichromatie — le réglage des simulateurs",
+    "preset_warning": "Un profil type reste une moyenne. Si la personne que vous avez en tête peut se mesurer, son code vaudra toujours mieux.",
+    "invalid": "Ce code n'est pas reconnu. Vérifiez les lettres et les chiffres."
+  },
+  "view": {
+    "yours": "Vos yeux",
+    "theirs": "Les yeux de l'autre",
+    "drag": "Glissez la poignée. D'un côté ce que vous voyez, de l'autre ce qu'il voit — mesuré, pas estimé.",
+    "camera": "Caméra",
+    "photo": "Une photo",
+    "settings": "Réglages",
+    "severity": "Sévérité",
+    "measured": "mesurée",
+    "severity_hint": "Déplacer ce curseur quitte la mesure. Le repère reste sur la valeur réelle.",
+    "typical": "Vision typique",
+    "measured_pane": "Vision mesurée",
+    "standard": "Simulateur standard",
+    "standard_desc": "Sévérité 1,0 : tout fusionne. Personne ne voit ça.",
+    "profile": "Profil :",
+    "nocode": "Aucun code de vision dans ce lien. Choisissez un profil type ci-dessous, ou collez le code qu'on vous a transmis — un profil type n'est qu'une moyenne.",
+    "badimage": "Cette image n'a pas pu être lue. Essayez un autre fichier.",
+    "triptych": "Afficher les trois côte à côte",
+    "triptych_hint": "L'original, la vision mesurée, et ce qu'affichent les simulateurs du commerce. Utile pour faire la démonstration ; inutile pour simplement regarder.",
+    "typical_desc": "Ce que voit la personne qui regarde.",
+    "measured_desc": "La vision mesurée. Les couleurs se décalent, mais elles ne fusionnent pas toutes."
+  },
+  "camera": {
+    "denied": "L'accès à la caméra a été refusé.",
+    "notfound": "Aucune caméra détectée sur cet appareil.",
+    "busy": "La caméra est déjà utilisée par une autre application.",
+    "framed": "Cette page tourne dans un cadre intégré, qui n'accorde pas l'autorisation caméra : ouvrez-la dans un onglet à part.",
+    "fallback": "Chargez une photo à la place — le résultat est le même, en moins vivant."
+  },
+  "limits": {
+    "title": "Ce que cette mesure ne dit pas",
+    "notdiag": "Ce n'est pas un diagnostic. Le protocole cale un modèle sur votre discrimination ; il ne remplace ni un anomaloscope de Nagel ni un test CAD.",
+    "confusion": "Elle transmet vos confusions, pas votre ressenti. Aucune image ne peut montrer l'impression que vous avez devant un rouge.",
+    "notpoorer": "Ce qui paraît appauvri à l'observateur ne l'est pas pour vous : il compare à l'original, vous n'avez jamais eu ce point de comparaison.",
+    "screens": "Elle dépend de deux écrans. Vous calibrez sur le vôtre, les autres regardent sur le leur.",
+    "protan": "Pour un protan, elle sous-estime : le protocole neutralise les indices de luminance, dont la protanopie prive justement.",
+    "onenumber": "Un seul nombre ne résume pas un œil : pigment maculaire, âge du cristallin, taille du champ coloré, lumière ambiante."
+  },
+  "i18n": {
+    "unreviewed": "Cette traduction n'a pas encore été relue. Le vocabulaire clinique et les réserves scientifiques peuvent être imprécis."
+  }
+}

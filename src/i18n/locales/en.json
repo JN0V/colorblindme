@@ -1,0 +1,133 @@
+{
+  "_meta": {
+    "locale": "en",
+    "status": "reviewed",
+    "note": "Source language. Strings are authored here; every other catalogue translates this one. Clinical terms follow standard English usage (deuteranomaly, protanomaly, tritanomaly).",
+    "source": true
+  },
+  "app": {
+    "name": "Colorblind Me",
+    "tagline": "See through someone else's eyes",
+    "intro": "Every colour-blindness simulator shows the most severe case. Three people in four see far better than that. Measure the real figure, then show it.",
+    "privacy": "Everything runs in your browser. No measurement is sent anywhere, and the vision code travels inside the link itself.",
+    "language": "Language"
+  },
+  "door": {
+    "measure": {
+      "kicker": "Path 1",
+      "title": "I am colour blind",
+      "desc": "Three minutes of measurement, and you leave with a code that describes your vision."
+    },
+    "view": {
+      "kicker": "Path 2",
+      "title": "I want to see what someone sees",
+      "desc": "Enter the code you were given. The camera shows the world the way they see it."
+    },
+    "cta": "Continue"
+  },
+  "axis": {
+    "prot": "Protanomaly",
+    "deut": "Deuteranomaly",
+    "trit": "Tritanomaly",
+    "prot_short": "protan",
+    "deut_short": "deutan",
+    "trit_short": "tritan",
+    "prot_cone": "L cone (red)",
+    "deut_cone": "M cone (green)",
+    "trit_cone": "S cone (blue)"
+  },
+  "setup": {
+    "title": "One condition only",
+    "filters": "Turn off every colour filter. Night mode, adaptive brightness, f.lux, accessibility colour correction, a \"vivid\" display profile. These apply after the page and would corrupt the measurement.",
+    "brightness": "Brightness between half and three quarters, at arm's length.",
+    "ambient": "Steady ambient light, no glare on the panel.",
+    "botheyes": "Both eyes open, as in normal use.",
+    "honesty": "When you see nothing, say so. It is the most useful answer in the test.",
+    "gamma": "Check your display gamma",
+    "gamma_hint": "Step back and squint: both halves should tend towards the same lightness.",
+    "start": "Start",
+    "duration": "About {count} trials, three minutes."
+  },
+  "trial": {
+    "prompt": "Tap the square that differs",
+    "inner": "Towards the centre: I'm unsure",
+    "outer": "Towards the outside: it's obvious",
+    "dunno": "I can't tell",
+    "quit": "Quit",
+    "counter": {
+      "one": "{count} trial",
+      "other": "{count} trials"
+    }
+  },
+  "result": {
+    "eyebrow": "Measurement complete",
+    "title": "Your vision, in two numbers",
+    "primary": "Primary deficiency",
+    "secondary": "Secondary",
+    "anomalous": "Anomalous trichromacy",
+    "dichromatic": "Full dichromacy",
+    "gap": "Your severity is {factor} times lower than what standard simulators show. That gap is exactly what makes people say \"oh, you poor thing\".",
+    "code": "Your vision code",
+    "code_hint": "The code travels inside the link: the people you send it to just open it and see. Nothing to install, no account.",
+    "copy": "Copy code",
+    "show": "Show what I see",
+    "again": "Measure again",
+    "detail": "The detail"
+  },
+  "load": {
+    "title": "Someone's vision code",
+    "intro": "If you were sent a link, it is already loaded and there is nothing to type. Otherwise, enter the code here.",
+    "label": "Vision code",
+    "go": "See through these eyes",
+    "or": "or, failing that",
+    "preset_deut_mid": "Moderate deuteranomaly",
+    "preset_prot_mid": "Moderate protanomaly",
+    "preset_deut_full": "Deuteranopia",
+    "preset_deut_mid_desc": "The most common case",
+    "preset_prot_mid_desc": "Reds darkened",
+    "preset_deut_full_desc": "Dichromacy — the simulators' setting",
+    "preset_warning": "A preset is an average. If the person you have in mind can measure themselves, their code will always be better.",
+    "invalid": "That code is not recognised. Check the letters and digits."
+  },
+  "view": {
+    "yours": "Your eyes",
+    "theirs": "Their eyes",
+    "drag": "Drag the handle. One side is what you see, the other what they see — measured, not guessed.",
+    "camera": "Camera",
+    "photo": "A photo",
+    "settings": "Settings",
+    "severity": "Severity",
+    "measured": "measured",
+    "severity_hint": "Moving this slider leaves the measurement behind. The marker stays on the real value.",
+    "typical": "Typical vision",
+    "measured_pane": "Measured vision",
+    "standard": "Standard simulator",
+    "standard_desc": "Severity 1.0: everything merges. Nobody sees this.",
+    "profile": "Profile:",
+    "nocode": "No vision code in this link. Pick a preset below, or paste the code you were given — a preset is only an average.",
+    "badimage": "That image could not be read. Try another file.",
+    "triptych": "Show all three side by side",
+    "triptych_hint": "Original, the measured vision, and what off-the-shelf simulators display. Useful for making the argument; unnecessary for simply looking.",
+    "typical_desc": "What the person looking at this sees.",
+    "measured_desc": "The measured vision. Colours shift, but they do not all collapse together."
+  },
+  "camera": {
+    "denied": "Camera access was refused.",
+    "notfound": "No camera found on this device.",
+    "busy": "The camera is already in use by another application.",
+    "framed": "This page is running inside an embedded frame, which does not grant camera permission: open it in its own tab.",
+    "fallback": "Load a photo instead — the result is the same, just less alive."
+  },
+  "limits": {
+    "title": "What this measurement does not tell you",
+    "notdiag": "This is not a diagnosis. The protocol fits a model to your discrimination; it replaces neither a Nagel anomaloscope nor a CAD test.",
+    "confusion": "It conveys your confusions, not your experience. No image can show what a red looks like to you.",
+    "notpoorer": "What looks impoverished to the viewer is not impoverished to you: they compare it to the original, and you never had that comparison.",
+    "screens": "It depends on two screens. You calibrate on yours; others look on theirs.",
+    "protan": "For a protan it underestimates: the protocol neutralises luminance cues, which is precisely what protanopia takes away.",
+    "onenumber": "One number does not sum up an eye: macular pigment, lens ageing with age, the size of the coloured field, ambient light."
+  },
+  "i18n": {
+    "unreviewed": "This translation has not been reviewed yet. Clinical vocabulary and scientific caveats may be imprecise."
+  }
+}
