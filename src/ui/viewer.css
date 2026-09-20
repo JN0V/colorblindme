@@ -27,7 +27,13 @@ body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size
 [hidden]{display:none!important}
 img{max-width:100%}
 
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--panel);border-bottom:1px solid var(--line)}
+/* The page draws under the status bar because of viewport-fit=cover, so a
+   bar pinned to the top must carry the inset in its OWN padding and stick at
+   0. Sticking AT the inset instead — which is what this did — leaves the
+   bar's content under the status bar and the whole page shifted up beneath
+   it. The background extends under the status bar; the content clears it. */
+.bar{position:sticky;top:0;z-index:20;background:var(--panel);
+  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
 .bar-in{max-width:980px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
 .brand{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:-.01em;margin-right:auto}
 .who{font-size:13px;color:var(--muted)}
@@ -174,3 +180,7 @@ footer a{color:var(--blue)}
    trials were the unreadable ones. An outline around the PAIR keeps its extent
    visible while leaving the internal edge, which is what the eye judges, clean. */
 .p-measure .pair2{box-shadow:0 0 0 1px rgba(26,26,26,.55)}
+
+/* --- safe areas on pages without a bar, and at the bottom everywhere --- */
+.p-home .home{padding-top:calc(36px + env(safe-area-inset-top, 0px))}
+footer{padding-bottom:calc(18px + env(safe-area-inset-bottom, 0px))}
