@@ -121,7 +121,12 @@
     "notfound": "Aucune caméra détectée sur cet appareil.",
     "busy": "La caméra est déjà utilisée par une autre application.",
     "framed": "Cette page tourne dans un cadre intégré, qui n'accorde pas l'autorisation caméra : ouvrez-la dans un onglet à part.",
-    "fallback": "Chargez une photo à la place — le résultat est le même, en moins vivant."
+    "fallback": "Chargez une photo à la place — le résultat est le même, en moins vivant.",
+    "asking": "Autorisation de la caméra en attente…",
+    "insecure": "La caméra exige une connexion sécurisée. Cette page est servie en http simple, où les navigateurs bloquent purement et simplement l'accès à la caméra.",
+    "unsupported": "Ce navigateur n'expose pas la caméra aux pages web. Les navigateurs bâtis sur la WebView système d'Android — dont Jelly, celui de LineageOS — ne peuvent pas accorder l'accès à la caméra, et refusent sans jamais le demander. Chrome ou Firefox fonctionneront.",
+    "timeout": "La caméra n'a jamais répondu — ni demande, ni refus. C'est la signature d'un navigateur bâti sur WebView qui refuse en silence. Essayez Chrome ou Firefox.",
+    "unknown": "La caméra n'a pas pu démarrer."
   },
   "limits": {
     "title": "Ce que cette mesure ne dit pas",

@@ -116,21 +116,49 @@ function stopCam() {
   if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
   cam.srcObject = null;
 }
+/**
+ * Starting the camera, and saying why when it will not start.
+ *
+ * The failure that prompted all this reported nothing at all. Browsers built
+ * on Android's system WebView — LineageOS's Jelly among them — deny a
+ * getUserMedia request with no OS prompt and, in some builds, no rejection
+ * either: the promise simply never settles. "It does not work and I cannot
+ * tell why" is the worst outcome an accessibility tool can produce, so every
+ * branch here ends in a specific sentence, and the raw error name is shown so
+ * a report is actionable.
+ */
+async function cameraDiagnosis() {
+  if (!window.isSecureContext) return "camera.insecure";
+  if (!navigator.mediaDevices?.getUserMedia) return "camera.unsupported";
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    if (devices.length && !devices.some(d => d.kind === "videoinput")) return "camera.notfound";
+  } catch { /* enumerateDevices can itself be blocked; not decisive */ }
+  return null;
+}
+
 async function startCam() {
   if (live) { stopCam(); state.source = "scene"; fit(); render(); setNote(null); return; }
-  if (!navigator.mediaDevices?.getUserMedia) return setNote("camera.framed", "warn");
+
+  const blocked = await cameraDiagnosis();
+  if (blocked) return setNote([blocked, "camera.fallback"], "warn");
+
   try {
     stopCam();
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: { ideal: "environment" }, width: { ideal: 1080 } }, audio: false });
+    setNote("camera.asking", "info");
+    /* A WebView that denies silently leaves this pending forever, so the
+       request itself gets a deadline, not only the metadata wait. */
+    stream = await Promise.race([
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: "environment" }, width: { ideal: 1080 } }, audio: false }),
+      new Promise((_, rej) => setTimeout(rej, 12000, Object.assign(new Error("no answer"), { name: "Timeout" }))),
+    ]);
     cam.srcObject = stream;
-    /* play() can resolve before the first frame decodes; without this wait
-       videoWidth is 0 and the first draws come out blank. */
     if (!cam.videoWidth) {
       await new Promise((res, rej) => {
         const ok = () => { cam.removeEventListener("loadedmetadata", ok); res(); };
         cam.addEventListener("loadedmetadata", ok);
-        setTimeout(rej, 6000, new Error("Timeout"));
+        setTimeout(rej, 6000, Object.assign(new Error("no frame"), { name: "Timeout" }));
       });
     }
     await cam.play();
@@ -139,9 +167,16 @@ async function startCam() {
     loop();
   } catch (err) {
     stopCam();
-    const why = { NotAllowedError: "camera.denied", NotFoundError: "camera.notfound",
-                  NotReadableError: "camera.busy" }[err.name];
-    setNote([why || "camera.framed", "camera.fallback"], "warn");
+    const known = {
+      NotAllowedError: "camera.denied",
+      NotFoundError: "camera.notfound",
+      NotReadableError: "camera.busy",
+      OverconstrainedError: "camera.notfound",
+      SecurityError: "camera.insecure",
+      Timeout: "camera.timeout",
+    }[err.name];
+    setNote([known || "camera.unknown", "camera.fallback"], "warn");
+    if (!known) $("#note").textContent += ` (${err.name})`;
   }
 }
 function loop(t) {
