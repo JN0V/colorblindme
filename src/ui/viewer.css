@@ -93,58 +93,84 @@ footer a{color:var(--blue)}
 .langs{display:flex;gap:10px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
-/* --- home: two doors, never a protocol --- */
-.home{max-width:760px;margin:0 auto;padding:36px 20px 8px}
-.hero{font-family:var(--disp);font-weight:700;font-size:clamp(30px,7vw,46px);line-height:1.04;letter-spacing:-.025em;margin:22px 0 0;text-wrap:balance}
-.lead{font-size:16.5px;line-height:1.5;color:var(--ink-2);margin:14px 0 0;max-width:56ch}
-.doors{display:grid;gap:13px;margin-top:28px}
+/* --- home, scoped --- */
+.p-home .home,.p-measure .home{max-width:760px;margin:0 auto;padding:36px 20px 8px}
+.p-home .hero,.p-measure .hero{font-family:var(--disp);font-weight:700;font-size:clamp(30px,7vw,46px);line-height:1.04;letter-spacing:-.025em;margin:22px 0 0;text-wrap:balance}
+.p-home .lead,.p-measure .lead{font-size:16.5px;line-height:1.5;color:var(--ink-2);margin:14px 0 0;max-width:56ch}
+.p-home .doors{display:grid;gap:13px;margin-top:28px}
 @media (min-width:760px){.doors{grid-template-columns:1fr 1fr}}
-.door{display:grid;gap:9px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:15px;color:var(--ink);text-decoration:none}
-.door:hover{border-color:var(--blue)}
-.door.amber:hover{border-color:var(--amber)}
-.door-ic{width:36px;height:36px;border-radius:10px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center}
-.door.amber .door-ic{background:var(--amber-soft);color:var(--amber)}
-.door-kick{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
-.door.amber .door-kick{color:var(--amber)}
-.door-title{font-family:var(--disp);font-size:22px;font-weight:600;line-height:1.15}
-.door-desc{font-size:14px;color:var(--muted);line-height:1.45}
-.door-cta{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:var(--blue);margin-top:2px}
-.door.amber .door-cta{color:var(--amber)}
+.p-home .door{display:grid;gap:9px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:15px;color:var(--ink);text-decoration:none}
+.p-home .door:hover{border-color:var(--blue)}
+.p-home .door.amber:hover{border-color:var(--amber)}
+.p-home .door-ic{width:36px;height:36px;border-radius:10px;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center}
+.p-home .door.amber .door-ic{background:var(--amber-soft);color:var(--amber)}
+.p-home .door-kick{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.p-home .door.amber .door-kick{color:var(--amber)}
+.p-home .door-title{font-family:var(--disp);font-size:22px;font-weight:600;line-height:1.15}
+.p-home .door-desc{font-size:14px;color:var(--muted);line-height:1.45}
+.p-home .door-cta{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:var(--blue);margin-top:2px}
+.p-home .door.amber .door-cta{color:var(--amber)}
 
-/* --- measurement --- */
-.checks{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:9px}
-.checks li{display:flex;gap:11px;font-size:14.5px;color:var(--ink-2);line-height:1.45}
-.checks li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--muted);margin-top:9px}
-.demo{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}
-.demo figure{margin:0;display:grid;gap:8px;justify-items:center}
-.demo figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.duo{display:flex;border-radius:8px;overflow:hidden}
-.duo div{width:92px;height:92px}
-.blurred{filter:blur(7px)}
-.stage{background:#777;border-radius:14px;margin-top:18px;display:grid;justify-items:center;align-content:center;gap:16px;padding:26px 16px;min-height:min(70vh,520px)}
-.ask{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#1A1A1A;opacity:.76;text-align:center}
-.pair2{display:flex;border-radius:8px;overflow:hidden;width:min(86vw,300px)}
-.swatch2{flex:1;aspect-ratio:1;border:0;padding:0;cursor:pointer}
-.same{font-family:var(--sans);font-size:14.5px;font-weight:600;padding:12px 22px;border-radius:24px;border:1px solid rgba(26,26,26,.4);background:rgba(255,255,255,.55);color:#1A1A1A;cursor:pointer;min-height:44px}
-.same:hover{background:#fff}
-.howto{max-width:310px;font-size:12.5px;line-height:1.45;color:#1A1A1A;opacity:.74;text-align:center}
-.bar2{width:min(100%,340px);height:3px;background:rgba(26,26,26,.18);border-radius:2px;overflow:hidden}
-.bar2 i{display:block;height:100%;background:#1A1A1A;opacity:.5;width:0;transition:width .2s}
-.arena{position:relative;width:min(80vw,310px);aspect-ratio:1}
-.ring{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.grid4{position:relative;display:grid;gap:6.25%;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);width:100%;height:100%}
-.patch{border:0;border-radius:4px;padding:0;cursor:pointer;width:100%;height:100%}
-.dunno{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;aspect-ratio:1;border-radius:50%;cursor:pointer;background:#777;border:1px dashed rgba(26,26,26,.5);color:#1A1A1A;font-family:var(--sans);font-size:12px;font-weight:600;line-height:1.25;padding:0;display:grid;place-items:center;text-align:center}
-.zones{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;max-width:360px}
-.zone{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:20px;border:1px solid rgba(26,26,26,.26);background:rgba(255,255,255,.46);color:#1A1A1A;font-size:13px;line-height:1.2}
-.zone.on{background:#fff;border-color:rgba(26,26,26,.75);font-weight:600}
-.zone i{width:12px;height:12px;border-radius:50%;border:1.5px solid #1A1A1A;flex:none}
-.zone[data-z="sure"] i{background:#1A1A1A}
-.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);margin:16px 0 0}
-.verdict div{padding:15px 17px;border-right:1px solid var(--line-soft)}
-.verdict div:last-child{border-right:none}
-.verdict dt{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:5px}
-.verdict dd{margin:0;font-family:var(--disp);font-weight:600;font-size:24px;line-height:1.1}
-.verdict dd small{display:block;font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--muted);margin-top:3px;line-height:1.4}
-pre{margin:0;font-family:var(--mono);font-size:17px;letter-spacing:.06em;background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:14px;user-select:all;color:var(--ink)}
-.lab{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+/* --- measurement, scoped: .stage/.ask/pre/.lab also exist in the viewer,
+       and an unscoped redefinition silently broke its wipe alignment --- */
+.p-measure .checks{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:9px}
+.p-measure .checks li{display:flex;gap:11px;font-size:14.5px;color:var(--ink-2);line-height:1.45}
+.p-measure .checks li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--muted);margin-top:9px}
+.p-measure .demo{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}
+.p-measure .demo figure{margin:0;display:grid;gap:8px;justify-items:center}
+.p-measure .demo figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.p-measure .duo{display:flex;border-radius:8px;overflow:hidden}
+.p-measure .duo div{width:92px;height:92px}
+.p-measure .blurred{filter:blur(7px)}
+.p-measure .stage{background:#777;border-radius:14px;margin-top:18px;display:grid;justify-items:center;align-content:center;gap:16px;padding:26px 16px;min-height:min(70vh,520px)}
+.p-measure .ask{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#1A1A1A;opacity:.76;text-align:center}
+.p-measure .pair2{display:flex;border-radius:8px;overflow:hidden;width:min(86vw,300px)}
+.p-measure .swatch2{flex:1;aspect-ratio:1;border:0;padding:0;cursor:pointer}
+.p-measure .same{font-family:var(--sans);font-size:14.5px;font-weight:600;padding:12px 22px;border-radius:24px;border:1px solid rgba(26,26,26,.4);background:rgba(255,255,255,.55);color:#1A1A1A;cursor:pointer;min-height:44px}
+.p-measure .same:hover{background:#fff}
+.p-measure .howto{max-width:310px;font-size:12.5px;line-height:1.45;color:#1A1A1A;opacity:.74;text-align:center}
+.p-measure .bar2{width:min(100%,340px);height:3px;background:rgba(26,26,26,.18);border-radius:2px;overflow:hidden}
+.p-measure .bar2 i{display:block;height:100%;background:#1A1A1A;opacity:.5;width:0;transition:width .2s}
+.p-measure .arena{position:relative;width:min(80vw,310px);aspect-ratio:1}
+.p-measure .ring{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.p-measure .grid4{position:relative;display:grid;gap:6.25%;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);width:100%;height:100%}
+.p-measure .patch{border:0;border-radius:4px;padding:0;cursor:pointer;width:100%;height:100%}
+.p-measure .dunno{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;aspect-ratio:1;border-radius:50%;cursor:pointer;background:#777;border:1px dashed rgba(26,26,26,.5);color:#1A1A1A;font-family:var(--sans);font-size:12px;font-weight:600;line-height:1.25;padding:0;display:grid;place-items:center;text-align:center}
+.p-measure .zones{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;max-width:360px}
+.p-measure .zone{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:20px;border:1px solid rgba(26,26,26,.26);background:rgba(255,255,255,.46);color:#1A1A1A;font-size:13px;line-height:1.2}
+.p-measure .zone.on{background:#fff;border-color:rgba(26,26,26,.75);font-weight:600}
+.p-measure .zone i{width:12px;height:12px;border-radius:50%;border:1.5px solid #1A1A1A;flex:none}
+.p-measure .zone[data-z="sure"] i{background:#1A1A1A}
+.p-measure .verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);margin:16px 0 0}
+.p-measure .verdict div{padding:15px 17px;border-right:1px solid var(--line-soft)}
+.p-measure .verdict div:last-child{border-right:none}
+.p-measure .verdict dt{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:5px}
+.p-measure .verdict dd{margin:0;font-family:var(--disp);font-weight:600;font-size:24px;line-height:1.1}
+.p-measure .verdict dd small{display:block;font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--muted);margin-top:3px;line-height:1.4}
+.p-measure pre{margin:0;font-family:var(--mono);font-size:17px;letter-spacing:.06em;background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:14px;user-select:all;color:var(--ink)}
+.p-measure .lab{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+/* --- mobile corrections, found by rendering the pages rather than reasoning --- */
+
+/* The bar ran the brand and the step label onto one line; at 390px the French
+   labels are longer than the English and the two collided. */
+.brand{white-space:nowrap}
+.who{min-width:0}
+@media (max-width:470px){
+  .bar-in{flex-wrap:wrap;row-gap:4px}
+  .who{flex-basis:100%;order:3;font-size:12.5px}
+  .brand{font-size:14px;margin-right:auto}
+}
+
+/* Wrapping left the arrow stranded beside the first figure, pointing at
+   nothing. Below the wrap point the demo reads top to bottom instead. */
+.p-measure .demo-arrow{color:var(--muted);font-size:22px;line-height:1}
+@media (max-width:560px){
+  .p-measure .demo{flex-direction:column;gap:10px}
+  .p-measure .demo-arrow{transform:rotate(90deg)}
+}
+
+/* A reference patch whose lightness matched the #777 field vanished into it —
+   and that happens precisely around the match point, so the most informative
+   trials were the unreadable ones. An outline around the PAIR keeps its extent
+   visible while leaving the internal edge, which is what the eye judges, clean. */
+.p-measure .pair2{box-shadow:0 0 0 1px rgba(26,26,26,.55)}
