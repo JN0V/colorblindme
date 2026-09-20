@@ -126,7 +126,8 @@
     "insecure": "La caméra exige une connexion sécurisée. Cette page est servie en http simple, où les navigateurs bloquent purement et simplement l'accès à la caméra.",
     "unsupported": "Ce navigateur n'expose pas la caméra aux pages web. Les navigateurs bâtis sur la WebView système d'Android — dont Jelly, celui de LineageOS — ne peuvent pas accorder l'accès à la caméra, et refusent sans jamais le demander. Chrome ou Firefox fonctionneront.",
     "timeout": "La caméra n'a jamais répondu — ni demande, ni refus. C'est la signature d'un navigateur bâti sur WebView qui refuse en silence. Essayez Chrome ou Firefox.",
-    "unknown": "La caméra n'a pas pu démarrer."
+    "unknown": "La caméra n'a pas pu démarrer.",
+    "noframe": "La caméra a été autorisée mais n'a envoyé aucune image. Sur certains appareils le flux exige que la page reste au premier plan — revenez sur cet onglet et réessayez. Si ça persiste, une photo fait tout aussi bien l'affaire."
   },
   "limits": {
     "title": "Ce que cette mesure ne dit pas",

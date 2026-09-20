@@ -107,7 +107,10 @@ function bindWipe() {
 let photo = null;
 const cam = document.createElement("video");
 cam.playsInline = true; cam.muted = true;
-Object.assign(cam.style, { position: "fixed", left: "-9999px", top: "0", width: "1px", height: "1px", opacity: "0" });
+/* Not display:none, which stops some engines decoding, and not parked far
+   off-screen either, which some throttle. One transparent pixel, in view. */
+Object.assign(cam.style, { position: "fixed", right: "0", bottom: "0",
+  width: "1px", height: "1px", opacity: "0.01", pointerEvents: "none", zIndex: "-1" });
 document.body.appendChild(cam);
 let stream = null, live = false, lastFrame = 0;
 
@@ -137,6 +140,21 @@ async function cameraDiagnosis() {
   return null;
 }
 
+/** Resolve once the element actually has pixel dimensions, polling rather
+    than trusting a single event that may never fire. */
+function frames(ms) {
+  return new Promise((res, rej) => {
+    const t0 = performance.now();
+    (function tick() {
+      if (cam.videoWidth) return res();
+      if (performance.now() - t0 > ms) {
+        return rej(Object.assign(new Error("no frame"), { name: "NoFrame" }));
+      }
+      requestAnimationFrame(tick);
+    })();
+  });
+}
+
 async function startCam() {
   if (live) { stopCam(); state.source = "scene"; fit(); render(); setNote(null); return; }
 
@@ -154,14 +172,12 @@ async function startCam() {
       new Promise((_, rej) => setTimeout(rej, 12000, Object.assign(new Error("no answer"), { name: "Timeout" }))),
     ]);
     cam.srcObject = stream;
-    if (!cam.videoWidth) {
-      await new Promise((res, rej) => {
-        const ok = () => { cam.removeEventListener("loadedmetadata", ok); res(); };
-        cam.addEventListener("loadedmetadata", ok);
-        setTimeout(rej, 6000, Object.assign(new Error("no frame"), { name: "Timeout" }));
-      });
-    }
-    await cam.play();
+    /* play() BEFORE waiting on dimensions. Several engines withhold
+       loadedmetadata for a MediaStream until playback starts, so waiting
+       first is waiting on an event our own inaction prevents — which is
+       exactly how this hung after the permission had been granted. */
+    try { await cam.play(); } catch { /* autoplay edge cases; frames may still arrive */ }
+    await frames(8000);
     state.source = "camera"; live = true; photo = null;
     fit(); setNote(null);
     loop();
@@ -174,6 +190,7 @@ async function startCam() {
       OverconstrainedError: "camera.notfound",
       SecurityError: "camera.insecure",
       Timeout: "camera.timeout",
+      NoFrame: "camera.noframe",
     }[err.name];
     setNote([known || "camera.unknown", "camera.fallback"], "warn");
     if (!known) $("#note").textContent += ` (${err.name})`;
