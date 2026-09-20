@@ -57,7 +57,8 @@
     "counter": {
       "one": "{count} essai",
       "other": "{count} essais"
-    }
+    },
+    "step": "Étape 2 sur 2 — combien"
   },
   "result": {
     "eyebrow": "Mesure terminée",
@@ -72,7 +73,11 @@
     "copy": "Copier le code",
     "show": "Montrer ce que je vois",
     "again": "Refaire",
-    "detail": "Le détail"
+    "detail": "Le détail",
+    "severity": "Sévérité",
+    "gap_label": "Écart aux simulateurs",
+    "gap_sub": "de sévérité en moins que ce qu'ils affichent",
+    "axis_from_luminance": "L'axe a été décidé sur la luminance, seul signal qui sépare protan de deutan de façon fiable. La sévérité vient de l'escalier chromatique."
   },
   "load": {
     "title": "Le code d'un proche",
@@ -129,5 +134,19 @@
   },
   "i18n": {
     "unreviewed": "Cette traduction n'a pas encore été relue. Le vocabulaire clinique et les réserves scientifiques peuvent être imprécis."
+  },
+  "lum": {
+    "step": "Étape 1 sur 2 — quel axe",
+    "learn_title": "La question est contre-intuitive. Voyons-la une fois.",
+    "learn_lead": "On va vous demander lequel de deux carrés serait le gris le plus pâle sur une photo en noir et blanc. Voici ce que ça veut dire :",
+    "as_seen": "ce que vous voyez",
+    "in_bw": "en noir et blanc",
+    "learn_point": "Le rouge attire davantage l'œil. Le gris est pourtant le plus pâle. C'est le gris qu'il faudrait désigner. Ce n'est pas « lequel je vois le mieux », ni « lequel tranche sur le fond », ni « lequel est le plus coloré ».",
+    "squint": "L'astuce qui marche : plissez fort les yeux jusqu'au flou. La teinte s'efface avant la clarté, et il ne reste que ce qu'on vous demande de juger.",
+    "understood": "J'ai compris, commencer",
+    "ask": "Le plus pâle en noir et blanc",
+    "same": "Les deux pareils",
+    "howto": "Plissez les yeux. Si vous ne pouvez pas trancher, dites-le — c'est une réponse, pas un échec.",
+    "undecided": "Le rapport de clarté est tombé dans la zone indéterminée : l'axe est une supposition, pas une mesure. Refaites la mesure dans de meilleures conditions de lumière avant de vous y fier."
   }
 }

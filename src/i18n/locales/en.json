@@ -57,7 +57,8 @@
     "counter": {
       "one": "{count} trial",
       "other": "{count} trials"
-    }
+    },
+    "step": "Step 2 of 2 — how much"
   },
   "result": {
     "eyebrow": "Measurement complete",
@@ -72,7 +73,11 @@
     "copy": "Copy code",
     "show": "Show what I see",
     "again": "Measure again",
-    "detail": "The detail"
+    "detail": "The detail",
+    "severity": "Severity",
+    "gap_label": "Gap to simulators",
+    "gap_sub": "less severe than what they display",
+    "axis_from_luminance": "The axis was decided on luminance, which is the only signal that separates protan from deutan reliably. The severity comes from the chromatic staircase."
   },
   "load": {
     "title": "Someone's vision code",
@@ -129,5 +134,19 @@
   },
   "i18n": {
     "unreviewed": "This translation has not been reviewed yet. Clinical vocabulary and scientific caveats may be imprecise."
+  },
+  "lum": {
+    "step": "Step 1 of 2 — which axis",
+    "learn_title": "The question is counter-intuitive. Let's see it once.",
+    "learn_lead": "You will be asked which of two squares would be the paler grey in a black and white photograph. Here is what that means:",
+    "as_seen": "what you see",
+    "in_bw": "in black and white",
+    "learn_point": "The red pulls the eye harder. The grey is the paler one. It is the grey you would pick. Not \"which do I see best\", not \"which stands out from the background\", not \"which is more colourful\".",
+    "squint": "The trick that works: squint hard until it blurs. Hue fades before lightness does, and only what you are being asked to judge is left.",
+    "understood": "Got it, start",
+    "ask": "The paler one in black and white",
+    "same": "They look the same",
+    "howto": "Squint. If you cannot tell them apart, say so — that is an answer, not a failure.",
+    "undecided": "The lightness ratio fell in the undecided band, so the axis is a guess rather than a measurement. Run the measurement again in better light before trusting it."
   }
 }

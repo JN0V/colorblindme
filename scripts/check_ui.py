@@ -10,6 +10,7 @@ import json, pathlib, re, sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 LOCALES = ROOT / "src" / "i18n" / "locales"
 SOURCE = "en"
+PAGES = {"index.html": "home.js", "view.html": "viewer.js", "measure.html": "measure.js"}
 
 
 def leaves(obj, prefix=""):
@@ -26,7 +27,7 @@ def main() -> int:
     keys = set(leaves(json.loads((LOCALES / f"{SOURCE}.json").read_text("utf-8"))))
     failures = 0
 
-    for page in sorted(ROOT.glob("index.html")):
+    for page in sorted(ROOT.glob("*.html")):
         html = page.read_text("utf-8")
         used = set(re.findall(r'data-i18n="([^"]+)"', html))
         for attr in re.findall(r'data-i18n-attr="([^"]+)"', html):
@@ -41,13 +42,16 @@ def main() -> int:
         else:
             print(f"ok   {label} — {len(used)} keys resolve")
 
-    # Selectors the viewer reaches for at boot must exist in every shell —
-    # except the ones it builds itself, which are counted from the class
-    # attributes appearing inside its own string literals.
-    js = (ROOT / "src" / "ui" / "viewer.js").read_text("utf-8")
-    sel = set(re.findall(r'\$\("([#.][^"]+)"\)', js)) | set(re.findall(r'\$\$\("([#.][^"]+)"\)', js))
-    injected = {c for attr in re.findall(r'class=\\?"([^"\\]+)', js) for c in attr.split()}
-    for page in sorted(ROOT.glob("index.html")):
+    # Every page's own script must find what it reaches for — except the
+    # elements it builds itself, counted from the class attributes appearing
+    # inside its own string literals.
+    for page, script in PAGES.items():
+        js = (ROOT / "src" / "ui" / script).read_text("utf-8")
+        sel = (set(re.findall(r'\$\("([#.][^"]+)"\)', js))
+               | set(re.findall(r'\$\$\("([#.][^"]+)"\)', js))
+               | set(re.findall(r'querySelector(?:All)?\("([#.][^"]+)"\)', js)))
+        injected = {c for attr in re.findall(r'class=\\?"([^"\\]+)', js) for c in attr.split()}
+        page = ROOT / page
         html = page.read_text("utf-8")
         ids = set(re.findall(r'id="([^"]+)"', html))
         classes = {c for attr in re.findall(r'class="([^"]+)"', html) for c in attr.split()}

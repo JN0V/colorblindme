@@ -10,83 +10,38 @@
 </head>
 <body>
 
-<div class="bar">
-  <div class="bar-in">
-    <span class="brand" data-i18n="app.name"></span>
-    <span class="who" id="who"></span>
-    <button class="iconbtn" id="gear" data-i18n-attr="aria-label:view.settings" type="button"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
-  </div>
-</div>
-
-<main>
+<main class="home">
   <p class="note" id="unreviewed" data-i18n="i18n.unreviewed" hidden></p>
 
-  <div class="stagewrap">
-    <div class="stage" tabindex="0" role="group" data-i18n-attr="aria-label:view.drag">
-      <canvas id="base"></canvas>
-      <div class="top"><canvas id="sim"></canvas></div>
-      <div class="divider"></div>
-      <div class="grip"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-6 6 6 6"></path><path d="m15 6 6 6-6 6"></path></svg></div>
-      <span class="tag l"></span>
-      <span class="tag r"></span>
-    </div>
-    <p class="hint" data-i18n="view.drag"></p>
+  <h1 class="hero" data-i18n="app.tagline"></h1>
+  <p class="lead" data-i18n="app.intro"></p>
+
+  <div class="doors">
+    <a class="door" href="measure.html">
+      <span class="door-ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle></svg></span>
+      <span class="door-kick" data-i18n="door.measure.kicker"></span>
+      <span class="door-title" data-i18n="door.measure.title"></span>
+      <span class="door-desc" data-i18n="door.measure.desc"></span>
+      <span class="door-cta"><span data-i18n="door.cta"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+    </a>
+    <a class="door amber" href="view.html">
+      <span class="door-ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></span>
+      <span class="door-kick" data-i18n="door.view.kicker"></span>
+      <span class="door-title" data-i18n="door.view.title"></span>
+      <span class="door-desc" data-i18n="door.view.desc"></span>
+      <span class="door-cta"><span data-i18n="door.cta"></span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></span>
+    </a>
   </div>
-
-  <p class="note info" id="note" hidden></p>
-
-  <div class="row">
-    <button class="btn" id="camera" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span data-i18n="view.camera"></span></button>
-    <label class="btn ghost filepick"><span data-i18n="view.photo"></span>
-      <input type="file" id="photo" accept="image/*"></label>
-  </div>
-
-  <div class="sheet" id="sheet" hidden>
-    <h2 data-i18n="view.settings"></h2>
-
-    <div class="field">
-      <div class="lab"><label for="sev" data-i18n="view.severity"></label>
-        <span class="val" id="sevval"></span></div>
-      <input type="range" id="sev" min="0" max="10" step="1" value="5">
-      <p class="small" data-i18n="view.severity_hint"></p>
-    </div>
-
-    <div class="field">
-      <label class="lab" for="tri"><span data-i18n="view.triptych"></span>
-        <input type="checkbox" id="tri"></label>
-      <p class="small" data-i18n="view.triptych_hint"></p>
-    </div>
-
-    <div class="field">
-      <label class="lab" for="code" data-i18n="load.label"></label>
-      <div class="codein">
-        <input type="text" id="code" placeholder="CBM1-D5-P2" autocomplete="off" spellcheck="false">
-        <button class="btn" id="apply" type="button" data-i18n="load.go" style="flex-grow:0"></button>
-      </div>
-      <p class="small" data-i18n="load.intro"></p>
-    </div>
-
-    <div class="field">
-      <span class="lab" data-i18n="load.or"></span>
-      <div class="presets"></div>
-    </div>
-  </div>
-
-  <div class="tri" hidden>
-    <figure><canvas></canvas><figcaption><b data-i18n="view.typical"></b><span data-i18n="view.typical_desc"></span></figcaption></figure>
-    <figure class="hero"><canvas></canvas><figcaption><b id="capmid"></b><span data-i18n="view.measured_desc"></span></figcaption></figure>
-    <figure><canvas></canvas><figcaption><b data-i18n="view.standard"></b><span data-i18n="view.standard_desc"></span></figcaption></figure>
-  </div>
-
-  <footer>
-    <p style="margin:0" data-i18n="app.privacy"></p>
-    <div class="langs">
-      <label for="lang" data-i18n="app.language"></label>
-      <select id="lang"></select>
-    </div>
-  </footer>
 </main>
 
-<script type="module" src="src/ui/viewer.js"></script>
+<footer style="max-width:980px;margin:0 auto;padding:18px">
+  <p style="margin:0" data-i18n="app.privacy"></p>
+  <div class="langs">
+    <label for="lang" data-i18n="app.language"></label>
+    <select id="lang"></select>
+  </div>
+</footer>
+
+<script type="module" src="src/ui/home.js"></script>
 </body>
 </html>

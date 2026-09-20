@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Colorblind Me</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="src/ui/viewer.css">
+</head>
+<body>
+<div class="bar"><div class="bar-in">
+  <a class="brand" href="index.html" data-i18n="app.name" style="text-decoration:none;color:inherit"></a>
+  <span class="who" id="step"></span>
+</div></div>
+
+<main class="home">
+  <p class="note" id="unreviewed" data-i18n="i18n.unreviewed" hidden></p>
+
+  <!-- 1 · conditions -->
+  <section id="s-intro">
+    <h1 class="hero" style="font-size:clamp(26px,6vw,36px)" data-i18n="setup.title"></h1>
+    <p class="note" style="border-color:var(--amber);background:var(--amber-soft)" data-i18n="setup.filters"></p>
+    <ul class="checks">
+      <li data-i18n="setup.brightness"></li>
+      <li data-i18n="setup.ambient"></li>
+      <li data-i18n="setup.botheyes"></li>
+      <li data-i18n="setup.honesty"></li>
+    </ul>
+    <div class="row"><button class="btn" id="go-lum" type="button" data-i18n="setup.start"></button></div>
+  </section>
+
+  <!-- 2 · teaching the lightness judgement -->
+  <section id="s-learn" hidden>
+    <h1 class="hero" style="font-size:clamp(24px,5.5vw,32px)" data-i18n="lum.learn_title"></h1>
+    <p class="lead" style="font-size:15px" data-i18n="lum.learn_lead"></p>
+    <div class="demo">
+      <figure><div class="duo"><div style="background:#FF0000"></div><div style="background:#A4A4A4"></div></div>
+        <figcaption data-i18n="lum.as_seen"></figcaption></figure>
+      <div style="color:var(--muted);font-size:22px">&rarr;</div>
+      <figure><div class="duo"><div style="background:#7F7F7F"></div><div style="background:#A4A4A4"></div></div>
+        <figcaption data-i18n="lum.in_bw"></figcaption></figure>
+    </div>
+    <p class="note" style="border-color:var(--amber);background:var(--amber-soft)" data-i18n="lum.learn_point"></p>
+    <p class="lead" style="font-size:14.5px" data-i18n="lum.squint"></p>
+    <div class="demo"><div class="duo blurred"><div style="background:#FF0000"></div><div style="background:#A4A4A4"></div></div></div>
+    <div class="row"><button class="btn" id="go-lum2" type="button" data-i18n="lum.understood"></button></div>
+  </section>
+
+  <!-- 3 · the lightness match -->
+  <div class="stage" id="s-lum" hidden>
+    <div class="ask" data-i18n="lum.ask"></div>
+    <div class="pair2" id="lumpair">
+      <button class="swatch2" data-i="0" type="button"></button>
+      <button class="swatch2" data-i="1" type="button"></button>
+    </div>
+    <button class="same" id="lumsame" type="button" data-i18n="lum.same"></button>
+    <div class="howto" data-i18n="lum.howto"></div>
+    <div class="bar2"><i id="lumprog"></i></div>
+  </div>
+
+  <!-- 4 · severity -->
+  <div class="stage" id="s-sev" hidden>
+    <div class="ask" data-i18n="trial.prompt"></div>
+    <div class="arena">
+      <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="43.1" fill="none" stroke="#1A1A1A" stroke-opacity=".34" stroke-width=".8" stroke-dasharray="2 2.6"></circle>
+      </svg>
+      <div class="grid4" id="grid">
+        <button class="patch" data-i="0" type="button"></button>
+        <button class="patch" data-i="1" type="button"></button>
+        <button class="patch" data-i="2" type="button"></button>
+        <button class="patch" data-i="3" type="button"></button>
+      </div>
+      <button class="dunno" id="dunno" type="button" data-i18n="trial.dunno"></button>
+    </div>
+    <div class="zones" id="zones">
+      <span class="zone" data-z="hint"><i></i><span data-i18n="trial.inner"></span></span>
+      <span class="zone" data-z="sure"><i></i><span data-i18n="trial.outer"></span></span>
+    </div>
+    <div class="bar2"><i id="sevprog"></i></div>
+  </div>
+
+  <!-- 5 · result -->
+  <section id="s-out" hidden>
+    <h1 class="hero" style="font-size:clamp(24px,5.5vw,32px)" data-i18n="result.title"></h1>
+    <dl class="verdict" id="verdict"></dl>
+    <p class="note" id="outnote"></p>
+    <div class="field" style="margin-top:14px">
+      <span class="lab" data-i18n="result.code"></span>
+      <pre id="code"></pre>
+      <p class="small" data-i18n="result.code_hint"></p>
+    </div>
+    <div class="row">
+      <a class="btn" id="show" href="view.html" data-i18n="result.show"></a>
+      <button class="btn ghost" id="again" type="button" data-i18n="result.again"></button>
+    </div>
+  </section>
+</main>
+
+<footer style="max-width:980px;margin:0 auto;padding:18px">
+  <p style="margin:0" data-i18n="app.privacy"></p>
+  <div class="langs"><label for="lang" data-i18n="app.language"></label><select id="lang"></select></div>
+</footer>
+
+<script type="module" src="src/ui/measure.js"></script>
+</body>
+</html>
