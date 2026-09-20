@@ -47,7 +47,9 @@ main{max-width:980px;margin:0 auto;padding-inline:18px;padding-block:0 64px}
 /* --- the wipe: one image, one divider, the whole argument --- */
 .stagewrap{margin-top:18px}
 .stage{position:relative;border-radius:14px;overflow:hidden;background:var(--panel-2);touch-action:none;cursor:ew-resize;user-select:none}
-.stage canvas{display:block;width:100%;height:auto}
+.stage canvas,.stage .camlayer{display:block;width:100%;height:auto}
+.stage .camlayer{object-fit:cover}
+#camR{filter:url(#cvd)}
 .stage .top{position:absolute;inset:0}
 .divider{position:absolute;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 0 1px rgba(20,26,32,.3);pointer-events:none}
 .grip{position:absolute;top:50%;width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:0 2px 12px rgba(20,26,32,.34);display:grid;place-items:center;transform:translate(-50%,-50%);pointer-events:none;color:#3D4650}

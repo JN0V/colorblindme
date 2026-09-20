@@ -18,13 +18,25 @@
   </div>
 </div>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- linearRGB is not optional: the Machado matrices are defined in linear
+       light, and the CSS default of sRGB would blow out the reds. -->
+  <filter id="cvd" color-interpolation-filters="linearRGB">
+    <feColorMatrix id="cvdmat" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+  </filter>
+</svg>
+
 <main>
   <p class="note" id="unreviewed" data-i18n="i18n.unreviewed" hidden></p>
 
   <div class="stagewrap">
     <div class="stage" tabindex="0" role="group" data-i18n-attr="aria-label:view.drag">
       <canvas id="base"></canvas>
-      <div class="top"><canvas id="sim"></canvas></div>
+      <video id="camL" class="camlayer" playsinline muted hidden></video>
+      <div class="top">
+        <canvas id="sim"></canvas>
+        <video id="camR" class="camlayer" playsinline muted hidden></video>
+      </div>
       <div class="divider"></div>
       <div class="grip"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-6 6 6 6"></path><path d="m15 6 6 6-6 6"></path></svg></div>
       <span class="tag l"></span>

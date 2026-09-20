@@ -47,9 +47,7 @@ function sizeTo(w, h) {
 
 /** Paint whatever the current source is into `src`. */
 function paintSource() {
-  if (state.source === "camera" && cam.videoWidth) {
-    sctx.drawImage(cam, 0, 0, src.width, src.height);
-  } else if (state.source === "photo" && photo) {
+  if (state.source === "photo" && photo) {
     sctx.drawImage(photo, 0, 0, src.width, src.height);
   } else {
     drawScene(sctx, src.width, src.height);
@@ -64,6 +62,8 @@ function simulateInto(ctx, severity) {
 
 function render() {
   if (!state.profile) return;
+  syncFilter();                    /* cheap, and keeps the camera path ready */
+  if (live) { placeDivider(); return; }
   paintSource();
   bctx.drawImage(src, 0, 0);
   simulateInto(simctx, state.severity);
@@ -105,19 +105,32 @@ function bindWipe() {
 
 /* ---------- sources ---------- */
 let photo = null;
-const cam = document.createElement("video");
-cam.playsInline = true; cam.muted = true;
-/* Not display:none, which stops some engines decoding, and not parked far
-   off-screen either, which some throttle. One transparent pixel, in view. */
-Object.assign(cam.style, { position: "fixed", right: "0", bottom: "0",
-  width: "1px", height: "1px", opacity: "0.01", pointerEvents: "none", zIndex: "-1" });
-document.body.appendChild(cam);
-let stream = null, live = false, lastFrame = 0;
+let stream = null, live = false;
+let camL, camR;   /* the two live layers; in camera mode they replace the canvases */
+
+/** Push the current matrix into the SVG filter the right-hand video wears. */
+function syncFilter() {
+  const m = matrixFor(state.profile.primary.axis, state.severity);
+  document.getElementById("cvdmat").setAttribute("values",
+    `${m[0]} ${m[1]} ${m[2]} 0 0  ${m[3]} ${m[4]} ${m[5]} 0 0  ${m[6]} ${m[7]} ${m[8]} 0 0  0 0 0 1 0`);
+}
+
+/** Camera mode swaps the canvases out for the videos entirely. */
+function setLive(on) {
+  live = on;
+  for (const el of [camL, camR]) el.hidden = !on;
+  $("#base").hidden = on;
+  $("#sim").hidden = on;
+  /* The triptych is drawn into canvases, which the camera path no longer
+     feeds. Hide it rather than leave three stale frames on screen. */
+  if (on) { $(".tri").hidden = true; $("#tri").checked = false; state.triptych = false; }
+  if (on) syncFilter();
+}
 
 function stopCam() {
-  live = false;
+  if (camL) { setLive(false); camL.srcObject = camR.srcObject = null; }
+  else live = false;
   if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-  cam.srcObject = null;
 }
 /**
  * Starting the camera, and saying why when it will not start.
@@ -148,7 +161,7 @@ function frames(ms) {
   return new Promise((res, rej) => {
     const t0 = Date.now();
     (function tick() {
-      if (cam.videoWidth) return res();
+      if (camL.videoWidth) return res();
       if (Date.now() - t0 > ms) return rej(Object.assign(new Error("no frame"), { name: "NoFrame" }));
       setTimeout(tick, 120);
     })();
@@ -202,19 +215,24 @@ async function startCam() {
     const set = (track && track.getSettings) ? track.getSettings() : {};
     diag.settings = (set.width || "?") + "x" + (set.height || "?") + " " + (set.facingMode || "?");
 
-    cam.srcObject = stream;
-    /* play() BEFORE waiting on dimensions: several engines withhold
-       loadedmetadata for a MediaStream until playback starts. */
-    try { await cam.play(); diag.play = "ok"; } catch (e) { diag.play = e.name; }
+    /* Both layers take the same stream. Nothing is ever read back into a
+       canvas: reading a <video> that is not genuinely rendered returns black
+       on a good many Android devices, which is the failure this replaces.
+       The simulation is an SVG colour matrix composited by the GPU instead. */
+    camL.srcObject = stream;
+    camR.srcObject = stream;
+    setLive(true);
+    try { await Promise.all([camL.play(), camR.play()]); diag.play = "ok"; }
+    catch (e) { diag.play = e.name; }
     await frames(8000);
 
-    state.source = "camera"; live = true; photo = null;
-    fit(); setNote(null);
-    loop();
+    state.source = "camera"; photo = null;
+    setNote(null);
+    placeDivider();
   } catch (err) {
     stopCam();
     diag.error = err.name;
-    diag.video = cam.videoWidth + "x" + cam.videoHeight + " readyState=" + cam.readyState;
+    diag.video = camL.videoWidth + "x" + camL.videoHeight + " readyState=" + camL.readyState;
     const known = {
       NotAllowedError: "camera.denied", NotFoundError: "camera.notfound",
       NotReadableError: "camera.busy", OverconstrainedError: "camera.notfound",
@@ -224,13 +242,6 @@ async function startCam() {
   }
 }
 
-function loop(t) {
-  if (!live) return;
-  requestAnimationFrame(loop);
-  if (t && t - lastFrame < 66) return;    /* ~15fps is plenty and keeps the transform cheap */
-  lastFrame = t || 0;
-  if (cam.videoWidth) render();
-}
 function loadPhoto(file) {
   const url = URL.createObjectURL(file);
   const img = new Image();
@@ -242,9 +253,9 @@ function loadPhoto(file) {
 
 /** Match the canvas to the current source's aspect, capped for performance. */
 function fit() {
+  if (live) { placeDivider(); return; }
   let w = 1080, h = 720;
-  if (state.source === "camera" && cam.videoWidth) { w = cam.videoWidth; h = cam.videoHeight; }
-  else if (state.source === "photo" && photo) { w = photo.naturalWidth; h = photo.naturalHeight; }
+  if (state.source === "photo" && photo) { w = photo.naturalWidth; h = photo.naturalHeight; }
   const k = Math.min(1, 1080 / w);
   sizeTo(Math.round(w * k), Math.round(h * k));
   render();
@@ -329,6 +340,7 @@ async function boot() {
   await i18n.load(i18n.negotiate());
 
   base = $("#base"); sim = $("#sim");
+  camL = $("#camL"); camR = $("#camR");
 
   const picker = $("#lang");
   picker.innerHTML = Object.entries(i18n.LOCALES)
