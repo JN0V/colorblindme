@@ -128,7 +128,8 @@
     "timeout": "La caméra n'a jamais répondu — ni demande, ni refus. C'est la signature d'un navigateur bâti sur WebView qui refuse en silence. Essayez Chrome ou Firefox.",
     "unknown": "La caméra n'a pas pu démarrer.",
     "noframe": "La caméra a été autorisée mais n'a envoyé aucune image. Sur certains appareils le flux exige que la page reste au premier plan — revenez sur cet onglet et réessayez. Si ça persiste, une photo fait tout aussi bien l'affaire.",
-    "details": "Détails techniques (touchez pour ouvrir, puis copiez)"
+    "details": "Détails techniques (touchez pour ouvrir, puis copiez)",
+    "blank": "Si la zone caméra est noire : ce navigateur acquiert bien la caméra mais ne l'affiche pas. Les navigateurs bâtis sur la WebView système d'Android font ça, et la démonstration officielle de WebRTC y est noire aussi. Firefox ou Chrome afficheront l'image. Une photo fonctionne de toute façon."
   },
   "limits": {
     "title": "Ce que cette mesure ne dit pas",

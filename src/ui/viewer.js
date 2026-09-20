@@ -192,6 +192,42 @@ async function requestStream(diag) {
   throw last;
 }
 
+/**
+ * A second after the stream starts, sample it once.
+ *
+ * Verified on a OnePlus 5T running LineageOS: the browser acquires the
+ * camera, the indicator lights, the video element takes the stream's aspect
+ * ratio — and renders black. The WebRTC project's own getUserMedia sample is
+ * black on the same device, so this is the engine, not the page. Browsers
+ * built on Android's system WebView do it; Firefox and Chrome do not.
+ *
+ * We cannot repair that. We can stop reporting success over a black
+ * rectangle, which is the worst thing the page was doing. A real camera
+ * image is never perfectly uniform, so a frame with no variance at all means
+ * either the stream is not being rendered or it cannot be read — and the
+ * advice is the same either way. Advisory, never blocking: if the picture is
+ * in fact fine, the note is simply wrong and can be ignored.
+ */
+function checkBlank() {
+  setTimeout(() => {
+    if (!live) return;
+    try {
+      const c = document.createElement("canvas");
+      c.width = c.height = 8;
+      const cx = c.getContext("2d", { willReadFrequently: true });
+      cx.drawImage(camL, 0, 0, 8, 8);
+      const px = cx.getImageData(0, 0, 8, 8).data;
+      let min = 255, max = 0;
+      for (let i = 0; i < px.length; i += 4) {
+        const v = (px[i] + px[i + 1] + px[i + 2]) / 3;
+        if (v < min) min = v;
+        if (v > max) max = v;
+      }
+      if (max <= 4) setNote("camera.blank", "warn");
+    } catch { /* a blocked read tells us nothing either way */ }
+  }, 1200);
+}
+
 async function startCam() {
   if (live) { stopCam(); state.source = "scene"; fit(); render(); setNote(null); return; }
 
@@ -229,6 +265,7 @@ async function startCam() {
     state.source = "camera"; photo = null;
     setNote(null);
     placeDivider();
+    checkBlank();
   } catch (err) {
     stopCam();
     diag.error = err.name;
